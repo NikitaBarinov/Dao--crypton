@@ -60,7 +60,7 @@ export default {
           }
         }
       },
-      defaultNetwork: 'rinkeby',
+      defaultNetwork: 'hardhat',
       networks: {
         rinkeby: createNetworkConfig('rinkeby')
       },

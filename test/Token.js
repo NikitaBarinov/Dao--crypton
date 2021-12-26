@@ -4,9 +4,6 @@ const { ethers } = require("hardhat");
 
 describe('Token contract', () => {
     let Token, token, Dao, dao, chairPerson, owner, addr1, addr2;
-    // const metadata = JSON.parse(fs.readFileSync('artifacts/contracts/Token.sol/Token.json'));
-    // metadata.abi 
-
     const setCommisionAbi = ["function setCommission(uint256 newCommission)"];
     const setCommissionInt = new ethers.utils.Interface(setCommisionAbi);
 
@@ -357,7 +354,8 @@ describe('Token contract', () => {
                 addProposal(
                     token.address,
                     "test proposal",
-                    TransactonByteCode);
+                    TransactonByteCode
+                );
             
             await dao.connect(owner).vote(0, true);
 
@@ -374,6 +372,98 @@ describe('Token contract', () => {
                     "test proposal",
                     true
                 )
+        });
+
+        it('FinishVote: should finish vote without execute function', async () => {
+            await dao.connect(owner).deposit(500);
+            await token.connect(owner).transfer(addr1.address, 205);
+            await dao.connect(addr1).deposit(200);
+            await dao.connect(owner).
+                addProposal(
+                    token.address,
+                    "test proposal",
+                    TransactonByteCode
+                );
+          
+            await dao.connect(addr1).vote(0, true);
+            await dao.connect(owner).vote(0, false);
+            
+            await network.provider.send("evm_increaseTime", [259205]);
+            await network.provider.send("evm_mine");
+            
+            await dao.connect(owner).finishVote(0);
+
+            var tokenCommission = await token.getCommission();
+            var result = await dao.getProposal(0);
+        
+            expect(result.open).to.equal(false);
+            expect(result.totalVotesFor).to.equal(200);
+            expect(result.totalVotes).to.equal(700);
+            expect(tokenCommission).to.equal(5);
+        });
+
+        it('FinishVote: should finish vote with execute and 3 voters', async () => {
+            await token.connect(owner).transfer(addr1.address, 205);
+            await token.connect(owner).transfer(addr2.address, 205);
+            await dao.connect(owner).deposit(200);
+            await dao.connect(addr1).deposit(200);
+            await dao.connect(addr2).deposit(200);
+
+            await dao.connect(owner).
+                addProposal(
+                    token.address,
+                    "test proposal",
+                    TransactonByteCode
+                );
+          
+            await dao.connect(addr1).vote(0, true);
+            await dao.connect(owner).vote(0, false);
+            await dao.connect(addr2).vote(0, true);
+
+            await network.provider.send("evm_increaseTime", [259205]);
+            await network.provider.send("evm_mine");
+            
+            await dao.connect(owner).finishVote(0);
+
+            var tokenCommission = await token.getCommission();
+            var result = await dao.getProposal(0);
+        
+            expect(result.open).to.equal(false);
+            expect(result.totalVotesFor).to.equal(400);
+            expect(result.totalVotes).to.equal(600);
+            expect(tokenCommission).to.equal(10);
+        });
+
+        it('FinishVote: should finish vote without execute and 3 voters', async () => {
+            await token.connect(owner).transfer(addr1.address, 205);
+            await token.connect(owner).transfer(addr2.address, 205);
+            await dao.connect(owner).deposit(200);
+            await dao.connect(addr1).deposit(200);
+            await dao.connect(addr2).deposit(200);
+
+            await dao.connect(owner).
+                addProposal(
+                    token.address,
+                    "test proposal",
+                    TransactonByteCode
+                );
+          
+            await dao.connect(addr1).vote(0, true);
+            await dao.connect(owner).vote(0, false);
+            await dao.connect(addr2).vote(0, false);
+
+            await network.provider.send("evm_increaseTime", [259205]);
+            await network.provider.send("evm_mine");
+            
+            await dao.connect(owner).finishVote(0);
+
+            var tokenCommission = await token.getCommission();
+            var result = await dao.getProposal(0);
+        
+            expect(result.open).to.equal(false);
+            expect(result.totalVotesFor).to.equal(200);
+            expect(result.totalVotes).to.equal(600);
+            expect(tokenCommission).to.equal(5);
         });
 
         it("FinishVote: should revert with 'Proposal already closed'", async () => {
