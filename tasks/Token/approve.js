@@ -16,7 +16,7 @@ const result = await token
   taskArgs.addressSpender,
   taskArgs.value
 );
-
+console.log('Transaction hash:',second.address);
 console.log('Transaction hash:',result.hash);
 });
 

@@ -10,6 +10,7 @@ const setCommissionInt = new ethers.utils.Interface(setCommisionAbi);
 TransactonByteCode = setCommissionInt.encodeFunctionData(
     'setCommission', [10]
 );
+
   const result = await dao.connect(second)
                     .addProposal(
                       token.address,

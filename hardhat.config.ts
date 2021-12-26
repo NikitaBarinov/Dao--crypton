@@ -44,7 +44,9 @@ function createNetworkConfig(
         mnemonic,
       },
       chainId: chainIds[network],
-      url
+      url,
+      gas: 2100000,
+      gasPrice: 8000000000
     };
   }
 
@@ -58,7 +60,7 @@ export default {
           }
         }
       },
-      defaultNetwork: 'hardhat',
+      defaultNetwork: 'rinkeby',
       networks: {
         rinkeby: createNetworkConfig('rinkeby')
       },

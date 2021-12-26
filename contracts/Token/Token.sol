@@ -44,9 +44,6 @@ contract Token is ITokenInterface{
     daoAddress = _dao;
   }
 
-  function getDaoAddress()external view returns(address){
-    return daoAddress;
-  }
 
   function setCommission(uint256 newCommission) external onlyOwner{
     commission = newCommission;
@@ -210,6 +207,11 @@ contract Token is ITokenInterface{
   function getCommission() external view returns(uint256){
     return commission;
   }
+
+  function getDaoAddress()external view returns(address){
+    return daoAddress;
+  }
+
 
   /// @notice Return balance of address   
   /// @return balance type uint256

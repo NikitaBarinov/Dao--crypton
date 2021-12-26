@@ -7,3 +7,4 @@ require('./transfer.js');
 require('./transferOwnership.js');
 require('./burn.js');
 require('./mint.js');
+require('./getCommission.js');

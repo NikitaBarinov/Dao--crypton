@@ -337,7 +337,7 @@ describe('Token contract', () => {
             
             await dao.connect(owner).vote(0, true);
 
-            await network.provider.send("evm_increaseTime", [259205])
+            await network.provider.send("evm_increaseTime", [259205]);
             await network.provider.send("evm_mine");
 
             await dao.connect(owner).finishVote(0);

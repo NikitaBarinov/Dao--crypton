@@ -9,3 +9,4 @@ require('./delegate.js');
 require('./changeVotingRules.js');
 require('./vote.js');
 require('./getUnlockBalance.js');
+require('./getVote.js');

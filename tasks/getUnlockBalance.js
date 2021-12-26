@@ -9,6 +9,6 @@ const result = await dao
   .getUnlockBalance(
     taskArgs.target
 );
-console.log('Time:',result);
+console.log('Time:',Number(result));
 });
   

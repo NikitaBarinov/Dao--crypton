@@ -33,6 +33,9 @@
   },
   "dependencies": {
     "@nomiclabs/hardhat-etherscan": "^2.1.8",
+    "@nomiclabs/hardhat-web3": "^2.0.0",
+    "bignumber.js": "^9.0.2",
+    "ethereum-waffle": "^3.4.0",
     "hardhat-docgen": "^1.2.1"
   }
 }

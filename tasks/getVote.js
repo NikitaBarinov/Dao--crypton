@@ -10,6 +10,6 @@ const result = await dao
     taskArgs.voter,
     taskArgs.proposalId
 );
-console.log('Choisen result:',result);
+console.log('Choisen result:', Number(result));
 });
   

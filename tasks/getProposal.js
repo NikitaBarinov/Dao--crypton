@@ -15,11 +15,11 @@ const proposal = await myContract.methods.getProposal(
     taskArgs.proposalId
 ).call();
 
-console.log('Transaction hash:',proposal.transactionByteCode);
-console.log('Transaction hash:',proposal.recipient);
-console.log('Transaction hash:',proposal.description);
-console.log('Transaction hash:',proposal.totalVotes);
-console.log('Transaction hash:',proposal.totalVotesFor);
-console.log('Transaction hash:',proposal.endTime);
-console.log('Transaction hash:',proposal.open);
+console.log('Transaction byte code:',proposal.transactionByteCode);
+console.log('Proposal recipient:',proposal.recipient);
+console.log('Proposal description:',proposal.description);
+console.log('Proposal total votes:',proposal.totalVotes);
+console.log('Proposal total votes for:',proposal.totalVotesFor);
+console.log('Proposal end time:',proposal.endTime);
+console.log('Proposal open ?:',proposal.open);
 });
